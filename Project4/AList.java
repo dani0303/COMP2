@@ -52,17 +52,21 @@ public class AList<T> implements ListInterface<T> {
         for(int i = 0; i < obj.length; i ++) {
             System.out.println(obj[i]);
         }
-
-        System.out.println(animals.contains("parrot"));
-
-        //Print
+        //Remove an object from the list
+        animals.remove(1);
+        //Print list
+        System.out.println();
         Object[] obj1 = animals.toArray();
         for(int i = 0; i < obj1.length; i ++) {
             System.out.println(obj1[i]);
         }
-
-        animals.clear();
-        System.out.println(animals.getLength());
+        //Remove an object from the list
+        //Print list
+        System.out.println(animals.remove("cats"));
+        Object[] obj2 = animals.toArray();
+        for(int i = 0; i < obj2.length; i ++) {
+            System.out.println(obj2[i]);
+        }
     }
 
     @Override
@@ -79,7 +83,7 @@ public class AList<T> implements ListInterface<T> {
     @Override
     public T remove(int givenPosition) {
         // TODO Auto-generated method stub
-        if((givenPosition >= 1) && (givenPosition <= numberOfEntries)) {
+        if((givenPosition >= 0) && (givenPosition <= numberOfEntries)) {
             T result = list[givenPosition];
             if(givenPosition < numberOfEntries)
                 removeGap(givenPosition);
@@ -137,29 +141,27 @@ public class AList<T> implements ListInterface<T> {
     @Override
     public int getLength() {
         // TODO Auto-generated method stub
-        return list.length;
+        return numberOfEntries;
     }
 
     @Override
     public boolean isEmpty() {
         // TODO Auto-generated method stub
-        return list.length == 0;
+        return numberOfEntries == 0;
     }
 
     @Override
     public boolean contains(T anEntry) {
         // TODO Auto-generated method stub
-        boolean result = false;
-        for(int i = 0; i < list.length; i ++) {
-            if(list[i].equals(anEntry)) {
-                System.out.println(list[i]);
-                result = true;
+        boolean found = false;
+        int index = 0;
+        while(!found && (index <= numberOfEntries)) {
+            if(anEntry.equals(list[index])) {
+                found = true;
             }
-            if(list[i].equals(null)) {
-                result = false;
-            }
+            index ++;
         }
-        return result;
+        return found;
     }
 
     private void makeRoom(int newPosition) {
@@ -172,7 +174,15 @@ public class AList<T> implements ListInterface<T> {
     @Override
     public boolean remove(T anEntry) {
         // TODO Auto-generated method stub
-        
+        if(contains(anEntry)) {
+            for(int i = 0; i < numberOfEntries; i ++) {
+                if(list[i].equals(anEntry)) {
+                    
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
